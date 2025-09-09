@@ -14,6 +14,7 @@
       --accent: #00ffc3;
       --card-bg: #f8f9fa;
       --card-shadow: rgba(0, 0, 0, 0.1);
+      --darkblue: #1e3a5f;
     }
 
     /* Dark mode */
@@ -40,6 +41,8 @@
       position: sticky;
       top: 0;
       z-index: 1000;
+
+      /* FLEXBOX layout */
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -53,6 +56,7 @@
 
     .navbar a,
     .navbar button {
+      float: none;
       display: block;
       color: var(--nav-text);
       text-align: center;
@@ -71,7 +75,7 @@
 
     .content {
       padding: 20px;
-      text-align: center;
+      text-align: center; /* Center content */
     }
 
     .profile-pic {
@@ -88,8 +92,13 @@
     /* Skills Section Styles */
     .skills-section {
       margin: 40px auto;
-      max-width: 1200px;
+      max-width: 1000px;
       padding: 0 20px;
+      color: var(--darkblue);
+    }
+
+    .skills-section h2 {
+      color: var(--darkblue);
     }
 
     .skills-grid {
@@ -109,6 +118,7 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      color: var(--darkblue);
     }
 
     .skill-category::before {
@@ -149,7 +159,7 @@
 
     .skill-tag {
       background: linear-gradient(135deg, var(--accent), rgba(0, 255, 195, 0.7));
-      color: #000;
+      color: #000; /* default dark mode */
       padding: 5px 10px;
       border-radius: 20px;
       font-size: 0.8em;
@@ -158,34 +168,17 @@
       cursor: default;
     }
 
+    /* Light mode: skill tag text dark blue */
+    body:not(.dark-mode) .skill-tag {
+      color: var(--darkblue);
+    }
+
     .skill-tag:hover {
       transform: scale(1.05);
       box-shadow: 0 2px 10px rgba(0, 255, 195, 0.3);
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 1100px) {
-      .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .skills-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Light mode text enhancement */
-    body:not(.dark-mode) .skill-category {
-      color: #1e3a5f;
-    }
-
-    body:not(.dark-mode) .skill-category h3 {
-      color: #004d40;
-    }
-
-    /* Background pulse animation */
+    /* Animation: subtle background pulse effect */
     body::before {
       content: "";
       position: fixed;
@@ -208,14 +201,31 @@
       display: flex;
       flex-direction: column;
     }
-
+    
+    .content {
+      flex: 1; /* pushes footer down */
+    }
+    
     .footer {
       background-color: var(--nav-bg);
       color: var(--text-color);
       text-align: center;
-      padding: 8px;
-      font-size: 12px;
+      padding: 8px;      /* thinner */
+      font-size: 12px;   /* smaller text */
       border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1100px) {
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+      }
+    }
+
+    @media (max-width: 600px) {
+      .skills-grid {
+        grid-template-columns: 1fr; /* Full width on mobile */
+      }
     }
   </style>
 </head>
@@ -233,9 +243,10 @@
 
   <div class="content">
     <h1>Hello, I'm Helena 👋</h1>
-
+  
+    <!-- Circular Profile Picture -->
     <img src="https://i.ibb.co/DDH0qxnd/Screenshot-2025-08-23-at-9-36-58-AM.png" alt="Helena Profile" class="profile-pic">
-
+    
     <h2>Things About Me</h2>
     <ul style="text-align: left; display: inline-block;">
       <li>Interests: Human-Robot Interaction (HRI), autonomous vehicles, machine learning, AI in robotics</li>
@@ -244,6 +255,7 @@
       <li>Spent three amazing years in Barcelona, Spain, playing futsal</li>
     </ul>
 
+    <!-- Skills Section -->
     <div class="skills-section">
       <h2>Skills & Expertise</h2>
       <div class="skills-grid">

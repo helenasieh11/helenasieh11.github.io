@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Website</title>
   <style>
     /* Light mode (default) */
@@ -26,7 +26,6 @@
       --accent: #00ffc3;
       --card-bg: #1a1d23;
       --card-shadow: rgba(0, 255, 195, 0.1);
-      --darkblue: #a0c4ff; /* lighter blue for dark mode cards */
     }
 
     body {
@@ -42,6 +41,8 @@
       position: sticky;
       top: 0;
       z-index: 1000;
+
+      /* FLEXBOX layout */
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -74,7 +75,7 @@
 
     .content {
       padding: 20px;
-      text-align: center;
+      text-align: center; /* Center content */
     }
 
     .profile-pic {
@@ -93,8 +94,6 @@
       margin: 40px auto;
       max-width: 1000px;
       padding: 0 20px;
-
-      /* Default light mode text color for skills section */
       color: var(--darkblue);
     }
 
@@ -104,7 +103,7 @@
 
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr); /* 4 cards per row on desktop */
+      grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
       gap: 16px;
       margin-top: 30px;
     }
@@ -119,8 +118,6 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
-
-      /* Text color dark blue in light mode */
       color: var(--darkblue);
     }
 
@@ -162,7 +159,7 @@
 
     .skill-tag {
       background: linear-gradient(135deg, var(--accent), rgba(0, 255, 195, 0.7));
-      color: var(--darkblue); /* dark blue text in light mode */
+      color: #000; /* default dark mode */
       padding: 5px 10px;
       border-radius: 20px;
       font-size: 0.8em;
@@ -171,24 +168,14 @@
       cursor: default;
     }
 
+    /* Light mode: skill tag text dark blue */
+    body:not(.dark-mode) .skill-tag {
+      color: var(--darkblue);
+    }
+
     .skill-tag:hover {
       transform: scale(1.05);
       box-shadow: 0 2px 10px rgba(0, 255, 195, 0.3);
-    }
-
-    /* Dark mode overrides */
-    body.dark-mode .skills-section {
-      color: var(--text-color);
-    }
-
-    body.dark-mode .skill-category {
-      color: var(--text-color);
-      background: var(--card-bg);
-      border: 1px solid rgba(0, 255, 195, 0.2);
-    }
-
-    body.dark-mode .skill-tag {
-      color: var(--text-color);
     }
 
     /* Animation: subtle background pulse effect */
@@ -223,8 +210,8 @@
       background-color: var(--nav-bg);
       color: var(--text-color);
       text-align: center;
-      padding: 8px;
-      font-size: 12px;
+      padding: 8px;      /* thinner */
+      font-size: 12px;   /* smaller text */
       border-top: 1px solid rgba(255,255,255,0.1);
     }
 

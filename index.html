@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>My Website</title>
   <style>
     /* Light mode (default) */
@@ -12,7 +12,7 @@
       --nav-bg: #e0e0e0;
       --nav-text: #000000;
       --accent: #00ffc3;
-      --card-bg: #f0f0f0; /* Changed to light grey */
+      --card-bg: #f8f9fa;
       --card-shadow: rgba(0, 0, 0, 0.1);
       --darkblue: #1e3a5f;
     }
@@ -26,6 +26,7 @@
       --accent: #00ffc3;
       --card-bg: #1a1d23;
       --card-shadow: rgba(0, 255, 195, 0.1);
+      --darkblue: #a0c4ff; /* lighter blue for dark mode cards */
     }
 
     body {
@@ -41,8 +42,6 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-
-      /* FLEXBOX layout */
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -75,7 +74,7 @@
 
     .content {
       padding: 20px;
-      text-align: center; /* Center content */
+      text-align: center;
     }
 
     .profile-pic {
@@ -93,26 +92,25 @@
     .skills-section {
       margin: 40px auto;
       max-width: 1000px;
-      padding: 20px; /* added padding for nicer spacing */
-      background-color: var(--darkblue); /* dark blue background */
-      color: #000000; /* black text for titles in light mode */
-      border-radius: 12px;
+      padding: 0 20px;
+
+      /* Default light mode text color for skills section */
+      color: var(--darkblue);
     }
 
     .skills-section h2 {
-      color: #000000; /* black title */
-      margin-bottom: 20px;
+      color: var(--darkblue);
     }
 
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+      grid-template-columns: repeat(4, 1fr); /* 4 cards per row on desktop */
       gap: 16px;
-      margin-top: 10px;
+      margin-top: 30px;
     }
 
     .skill-category {
-      background: var(--card-bg); /* light grey background */
+      background: var(--card-bg);
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 4px 16px var(--card-shadow);
@@ -121,7 +119,9 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
-      color: #000000; /* black text for skill category */
+
+      /* Text color dark blue in light mode */
+      color: var(--darkblue);
     }
 
     .skill-category::before {
@@ -146,7 +146,7 @@
     }
 
     .skill-category h3 {
-      color: #000000; /* black title */
+      color: var(--accent);
       margin: 0 0 20px 0;
       font-size: 1.4em;
       display: flex;
@@ -162,7 +162,7 @@
 
     .skill-tag {
       background: linear-gradient(135deg, var(--accent), rgba(0, 255, 195, 0.7));
-      color: #000000; /* black text */
+      color: var(--darkblue); /* dark blue text in light mode */
       padding: 5px 10px;
       border-radius: 20px;
       font-size: 0.8em;
@@ -176,27 +176,19 @@
       box-shadow: 0 2px 10px rgba(0, 255, 195, 0.3);
     }
 
-    /* Override dark mode for skill section and cards */
+    /* Dark mode overrides */
     body.dark-mode .skills-section {
-      display: none;
-    }
-
-    body.dark-mode .skills-section h2 {
-      color: var(--accent);
+      color: var(--text-color);
     }
 
     body.dark-mode .skill-category {
-      background: var(--card-bg);
       color: var(--text-color);
-      border: 1px solid rgba(0, 255, 195, 0.1);
-    }
-
-    body.dark-mode .skill-category h3 {
-      color: var(--accent);
+      background: var(--card-bg);
+      border: 1px solid rgba(0, 255, 195, 0.2);
     }
 
     body.dark-mode .skill-tag {
-      color: #000; /* keep tags black in dark mode for contrast */
+      color: var(--text-color);
     }
 
     /* Animation: subtle background pulse effect */
@@ -231,8 +223,8 @@
       background-color: var(--nav-bg);
       color: var(--text-color);
       text-align: center;
-      padding: 8px;      /* thinner */
-      font-size: 12px;   /* smaller text */
+      padding: 8px;
+      font-size: 12px;
       border-top: 1px solid rgba(255,255,255,0.1);
     }
 

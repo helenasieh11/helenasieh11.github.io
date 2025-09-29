@@ -6,7 +6,7 @@
   <title>My Website</title>
   <style>
     /* Light mode (default) */
-    :root {
+    /* :root {
       --bg-color: #ffffff;
       --text-color: #000000;
       --nav-bg: #e0e0e0;
@@ -15,9 +15,30 @@
       --card-bg: #f8f9fa;
       --card-shadow: rgba(0, 0, 0, 0.1);
       --darkblue: #1e3a5f;
-    }
+    } */
 
     /* Dark mode */
+    /* body.dark-mode {
+      --bg-color: #0a0f14;
+      --text-color: #cfd8dc;
+      --nav-bg: #1c1f26;
+      --nav-text: #00ffc3;
+      --accent: #00ffc3;
+      --card-bg: #1a1d23;
+      --card-shadow: rgba(0, 255, 195, 0.1);
+    } */
+
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --nav-bg: #e0e0e0;
+      --nav-text: #000000;
+      --accent: #00ffc3;
+      --card-bg: #f8f9fa;
+      --card-shadow: rgba(0, 0, 0, 0.1);
+      --darkblue: #002b49; /* Darker blue for better contrast on white */
+    }
+    
     body.dark-mode {
       --bg-color: #0a0f14;
       --text-color: #cfd8dc;
@@ -26,7 +47,9 @@
       --accent: #00ffc3;
       --card-bg: #1a1d23;
       --card-shadow: rgba(0, 255, 195, 0.1);
+      --darkblue: #cfd8dc; /* Match text-color in dark mode */
     }
+
 
     body {
       background-color: var(--bg-color);
@@ -261,7 +284,7 @@
       <div class="news-item" style="background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 16px var(--card-shadow); border-left: 5px solid var(--accent);">
         <h3 style="margin-top: 0; color: var(--accent);">Paper Submitted to HRI 2025!</h3>
         <p>
-          I’m excited to share that I am the <strong>co-author</strong> on a research paper recently submitted to the <a href="https://humanrobotinteraction.org/2025/" target="_blank">ACM/IEEE International Conference on Human-Robot Interaction (HRI 2025)</a>! 🎉<br><br>
+          I’m excited to share that I am the <strong>co-author</strong> on a research paper recently submitted to the <a href="https://humanrobotinteraction.org/2026/" target="_blank">ACM/IEEE International Conference on Human-Robot Interaction (HRI 2025)</a>! 🎉<br><br>
           focusing on human-robot collaboration and social perception. It’s currently under review!
         </p>
       </div>

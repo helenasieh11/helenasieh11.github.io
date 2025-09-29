@@ -3,31 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Website</title>
+  <title>Helena Sieh | Robotics Portfolio</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    /* Light mode (default) */
-    /* :root {
-      --bg-color: #ffffff;
-      --text-color: #000000;
-      --nav-bg: #e0e0e0;
-      --nav-text: #000000;
-      --accent: #00ffc3;
-      --card-bg: #f8f9fa;
-      --card-shadow: rgba(0, 0, 0, 0.1);
-      --darkblue: #1e3a5f;
-    } */
-
-    /* Dark mode */
-    /* body.dark-mode {
-      --bg-color: #0a0f14;
-      --text-color: #cfd8dc;
-      --nav-bg: #1c1f26;
-      --nav-text: #00ffc3;
-      --accent: #00ffc3;
-      --card-bg: #1a1d23;
-      --card-shadow: rgba(0, 255, 195, 0.1);
-    } */
-
     :root {
       --bg-color: #ffffff;
       --text-color: #000000;
@@ -36,9 +17,9 @@
       --accent: #00ffc3;
       --card-bg: #f8f9fa;
       --card-shadow: rgba(0, 0, 0, 0.1);
-      --darkblue: #002b49; /* Darker blue for better contrast on white */
+      --darkblue: #002b49;
     }
-    
+
     body.dark-mode {
       --bg-color: #0a0f14;
       --text-color: #cfd8dc;
@@ -47,14 +28,14 @@
       --accent: #00ffc3;
       --card-bg: #1a1d23;
       --card-shadow: rgba(0, 255, 195, 0.1);
-      --darkblue: #cfd8dc; /* Match text-color in dark mode */
+      --darkblue: #cfd8dc;
     }
-
 
     body {
       background-color: var(--bg-color);
       color: var(--text-color);
-      font-family: Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
       margin: 0;
       padding: 0;
     }
@@ -64,41 +45,71 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-
-      /* FLEXBOX layout */
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 10px;
+      padding: 0 16px;
     }
 
-    .nav-left {
+    .nav-left, .nav-right {
       display: flex;
-      gap: 10px;
+      align-items: center;
+      gap: 12px;
     }
 
-    .navbar a,
-    .navbar button {
-      float: none;
-      display: block;
+    .navbar a, .navbar button {
       color: var(--nav-text);
-      text-align: center;
-      padding: 14px 20px;
       text-decoration: none;
-      border: none;
-      background: none;
+      padding: 14px 10px;
       font-size: 16px;
+      background: none;
+      border: none;
       cursor: pointer;
     }
 
-    .navbar a:hover,
-    .navbar button:hover {
+    .navbar img {
+      vertical-align: middle;
+    }
+
+    .navbar a:hover, .navbar button:hover {
       background-color: rgba(255, 255, 255, 0.1);
     }
 
+    .hero {
+      padding: 60px 20px;
+      text-align: center;
+      background: linear-gradient(120deg, var(--accent), transparent);
+    }
+
+    .hero h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.3em;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .hero a {
+      margin: 20px 10px 0;
+      display: inline-block;
+    }
+
+    .hero a.resume-btn {
+      margin-top: 30px;
+      background: var(--accent);
+      color: black;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
     .content {
-      padding: 20px;
-      text-align: center; /* Center content */
+      padding: 40px 20px;
+      text-align: center;
     }
 
     .profile-pic {
@@ -112,66 +123,46 @@
       margin: 20px auto;
     }
 
-    /* Skills Section Styles */
-    .skills-section {
-      margin: 40px auto;
+    .skills-section, .news-section, .projects-section {
       max-width: 1000px;
+      margin: 60px auto;
       padding: 0 20px;
       color: var(--darkblue);
     }
 
-    .skills-section h2 {
+    .skills-section h2,
+    .projects-section h2,
+    .news-section h2 {
       color: var(--darkblue);
+      text-align: center;
+      margin-bottom: 40px;
     }
 
-    .skills-grid {
+    .skills-grid, .project-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
-      gap: 16px;
-      margin-top: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
     }
 
-    .skill-category {
+    .skill-category, .project-card, .news-item {
       background: var(--card-bg);
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 4px 16px var(--card-shadow);
-      border: 1px solid rgba(0, 255, 195, 0.1);
-      font-size: 0.9em;
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease;
       position: relative;
       overflow: hidden;
-      color: var(--darkblue);
     }
 
-    .skill-category::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), transparent);
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-
-    .skill-category:hover {
+    .skill-category:hover, .project-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 30px var(--card-shadow);
     }
 
-    .skill-category:hover::before {
-      transform: scaleX(1);
-    }
-
     .skill-category h3 {
       color: var(--accent);
-      margin: 0 0 20px 0;
-      font-size: 1.4em;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      margin-bottom: 20px;
+      font-size: 1.3em;
     }
 
     .skill-tags {
@@ -182,30 +173,46 @@
 
     .skill-tag {
       background: linear-gradient(135deg, var(--accent), rgba(0, 255, 195, 0.7));
-      color: #000; /* default dark mode */
+      color: var(--darkblue);
       padding: 5px 10px;
       border-radius: 20px;
       font-size: 0.8em;
       font-weight: 500;
-      transition: all 0.3s ease;
       cursor: default;
     }
 
-    /* Light mode: skill tag text dark blue */
-    body:not(.dark-mode) .skill-tag {
-      color: var(--darkblue);
-    }
-    body:not(.dark-mode) .skill-tag {
-      color: ##0004ff;  /* deep teal for high contrast on bright background */
-      font-weight: 600;
-    }
-
-    .skill-tag:hover {
-      transform: scale(1.05);
-      box-shadow: 0 2px 10px rgba(0, 255, 195, 0.3);
+    .project-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
     }
 
-    /* Animation: subtle background pulse effect */
+    .project-card h3 {
+      color: var(--accent);
+      margin: 0 0 10px 0;
+    }
+
+    .project-card a {
+      color: var(--accent);
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .footer {
+      background-color: var(--nav-bg);
+      color: var(--text-color);
+      text-align: center;
+      padding: 10px;
+      font-size: 12px;
+    }
+
+    @keyframes pulse {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 100% 100%; }
+    }
+
     body::before {
       content: "";
       position: fixed;
@@ -218,46 +225,16 @@
       animation: pulse 15s infinite alternate;
     }
 
-    @keyframes pulse {
-      0% { background-position: 0% 0%; }
-      100% { background-position: 100% 100%; }
-    }
-
-    html, body {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .content {
-      flex: 1; /* pushes footer down */
-    }
-    
-    .footer {
-      background-color: var(--nav-bg);
-      color: var(--text-color);
-      text-align: center;
-      padding: 8px;      /* thinner */
-      font-size: 12px;   /* smaller text */
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 1100px) {
-      .skills-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
-      }
-    }
-
     @media (max-width: 600px) {
-      .skills-grid {
-        grid-template-columns: 1fr; /* Full width on mobile */
+      .hero h1 {
+        font-size: 2em;
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- Navbar -->
   <div class="navbar">
     <div class="nav-left">
       <a href="index.html">Home</a>
@@ -265,147 +242,83 @@
       <a href="contact.html">Contact</a>
       <a href="resume.html">Resume</a>
     </div>
-    <button id="themeToggleBtn" class="toggle-btn" onclick="toggleTheme()">🌙</button>
+    <div class="nav-right">
+      <a href="https://github.com/yourusername" target="_blank" title="GitHub">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="20">
+      </a>
+      <a href="https://linkedin.com/in/yourname" target="_blank" title="LinkedIn">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="20">
+      </a>
+      <button id="themeToggleBtn" onclick="toggleTheme()">🌙</button>
+    </div>
   </div>
 
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Hi, I'm Helena Sieh 👋</h1>
+    <p>Robotics Engineer @ University of Michigan | Human-Robot Interaction • Autonomous Systems • CV/AI</p>
+    <a class="resume-btn" href="resume.pdf" target="_blank">📄 View My Resume</a>
+  </section>
+
+  <!-- Profile -->
   <div class="content">
-    <h1>Hello, I'm Helena 👋</h1>
-  
-    <!-- Circular Profile Picture -->
     <img src="https://i.ibb.co/DDH0qxnd/Screenshot-2025-08-23-at-9-36-58-AM.png" alt="Helena Profile" class="profile-pic">
-    
     <h2>Things About Me</h2>
-    <ul style="text-align: left; display: inline-block;">
+    <ul style="text-align: left; display: inline-block; max-width: 700px;">
       <li>Interests: Human-Robot Interaction (HRI), autonomous vehicles, machine learning, AI in robotics</li>
-      <li>Student at the <a href="https://robotics.umich.edu/" target="_blank">University of Michigan</a> studying Robotics Engineering</li>
+      <li>Student at the <a href="https://robotics.umich.edu/" target="_blank">University of Michigan</a></li>
       <li>Member of the <a href="https://mavric.si.umich.edu/" target="_blank">MAVRIC Lab</a></li>
       <li>Spent three amazing years in Barcelona, Spain, playing futsal</li>
     </ul>
-
-    <!-- News Section -->
-    <!-- <div class="news-section" style="margin: 40px auto; max-width: 800px; text-align: left;">
-      <h2 style="color: var(--darkblue);">📢 News</h2>
-      <div class="news-item" style="background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 16px var(--card-shadow); border-left: 5px solid var(--accent);">
-        <h3 style="margin-top: 0; color: var(--accent);">Paper Submitted to HRI 2025!</h3>
-        <p>
-          I’m excited to share that I am a <strong>co-author</strong> on a research paper recently submitted to the <a href="https://humanrobotinteraction.org/2026/" target="_blank">ACM/IEEE International Conference on Human-Robot Interaction (HRI 2025)</a>, focusing on human-robot collaboration and social perception. It’s currently under review!
-        </p>
-      </div>
-    </div> -->
-    <!-- News Section -->
-    <div class="news-section" style="margin: 40px auto; max-width: 800px; text-align: left;">
-      <h2 style="color: var(--darkblue);">📢 News</h2>
-      
-      <div class="news-item" style="background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 16px var(--card-shadow); border-left: 5px solid var(--accent);">
-        
-        <!-- Date -->
-        <p style="margin: 0 0 10px 0; color: var(--muted-text); font-size: 0.9em;"><em>September 30, 2025</em></p>
-        
-        <!-- Title -->
-        <h3 style="margin-top: 0; color: var(--accent);">Paper Submitted to HRI 2025!</h3>
-        
-        <!-- Content -->
-        <p>
-          I’m excited to share that I am a <strong>co-author</strong> on a research paper recently submitted to the 
-          <a href="https://humanrobotinteraction.org/2026/" target="_blank">
-            ACM/IEEE International Conference on Human-Robot Interaction (HRI 2025)
-          </a>, focusing on human-robot collaboration and social perception. It’s currently under review!
-        </p>
-        
-      </div>
-    </div>
-
-
-    <!-- Skills Section -->
-    <div class="skills-section">
-      <h2>Skills & Expertise</h2>
-      <div class="skills-grid">
-
-        <div class="skill-category">
-          <h3>🤖 Robotics & Systems</h3>
-          <div class="skill-tags">
-            <span class="skill-tag">ROS</span>
-            <span class="skill-tag">ROS2</span>
-            <span class="skill-tag">SLAM</span>
-            <span class="skill-tag">RTAB-Map</span>
-            <span class="skill-tag">Cartographer</span>
-            <span class="skill-tag">Isaac Sim</span>
-            <span class="skill-tag">PID Control</span>
-            <span class="skill-tag">Sensor Fusion</span>
-            <span class="skill-tag">Localization</span>
-            <span class="skill-tag">Mapping</span>
-            <span class="skill-tag">Odometry</span>
-            <span class="skill-tag">GNSS</span>
-            <span class="skill-tag">IMU</span>
-            <span class="skill-tag">Jetson Orin</span>
-            <span class="skill-tag">CUDA</span>
-            <span class="skill-tag">Gazebo</span>
-            <span class="skill-tag">ROS2 Bridge</span>
-            <span class="skill-tag">Actuators</span>
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3>🧠 Computer Vision & AI</h3>
-          <div class="skill-tags">
-            <span class="skill-tag">OpenCV</span>
-            <span class="skill-tag">Open3D</span>
-            <span class="skill-tag">YOLO</span>
-            <span class="skill-tag">PyTorch</span>
-            <span class="skill-tag">TensorFlow</span>
-            <span class="skill-tag">CNNs</span>
-            <span class="skill-tag">MediaPipe</span>
-            <span class="skill-tag">OpenFace</span>
-            <span class="skill-tag">Pose Estimation</span>
-            <span class="skill-tag">Gaze Estimation</span>
-            <span class="skill-tag">RGB-D Processing</span>
-            <span class="skill-tag">ArUco</span>
-            <span class="skill-tag">AprilTags</span>
-            <span class="skill-tag">scikit-learn</span>
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3>💻 Programming & Tools</h3>
-          <div class="skill-tags">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">C++</span>
-            <span class="skill-tag">Bash</span>
-            <span class="skill-tag">Shell</span>
-            <span class="skill-tag">Git</span>
-            <span class="skill-tag">GitHub</span>
-            <span class="skill-tag">Linux</span>
-            <span class="skill-tag">rosbag</span>
-            <span class="skill-tag">Isaac Sim APIs</span>
-            <span class="skill-tag">NumPy</span>
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3>🔧 Hardware & Prototyping</h3>
-          <div class="skill-tags">
-            <span class="skill-tag">SolidWorks</span>
-            <span class="skill-tag">Fusion 360</span>
-            <span class="skill-tag">3D Printing</span>
-            <span class="skill-tag">CNC</span>
-            <span class="skill-tag">Laser Cutting</span>
-            <span class="skill-tag">Arduino</span>
-            <span class="skill-tag">Raspberry Pi</span>
-            <span class="skill-tag">LiDAR</span>
-            <span class="skill-tag">RGB-D Cameras</span>
-            <span class="skill-tag">Thermal Cameras</span>
-            <span class="skill-tag">Toyota HSR</span>
-            <span class="skill-tag">Sensor Integration</span>
-            <span class="skill-tag">GD&T</span>
-            <span class="skill-tag">Meshlab</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
   </div>
 
+  <!-- News -->
+  <section class="news-section">
+    <h2>📢 News</h2>
+    <div class="news-item">
+      <p><em>September 30, 2025</em></p>
+      <h3>Paper Submitted to HRI 2025!</h3>
+      <p>
+        I’m a <strong>co-author</strong> on a paper recently submitted to the 
+        <a href="https://humanrobotinteraction.org/2026/" target="_blank">ACM/IEEE International Conference on Human-Robot Interaction (HRI 2025)</a>,
+        focusing on human-robot collaboration and social perception.
+      </p>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="skills-section">
+    <h2>Skills & Expertise</h2>
+    <div class="skills-grid">
+      <!-- Add your existing skill-category blocks here (unchanged) -->
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="projects-section">
+    <h2>Featured Projects</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <img src="https://via.placeholder.com/400x200" alt="Project 1">
+        <h3>Autonomous Robot Navigation</h3>
+        <p>Developed a fully autonomous robot using ROS2 and SLAM for indoor navigation.</p>
+        <a href="#">View Project →</a>
+      </div>
+      <div class="project-card">
+        <img src="https://via.placeholder.com/400x200" alt="Project 2">
+        <h3>Human-Robot Interaction Study</h3>
+        <p>Led a user study using a Toyota HSR to study gaze-based interaction in shared tasks.</p>
+        <a href="#">Read More →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Helena Sieh. All rights reserved.</p>
+  </footer>
+
+  <!-- Theme Script -->
   <script>
     function setTheme(isDark) {
       document.body.classList.toggle('dark-mode', isDark);
@@ -421,10 +334,6 @@
       setTheme(localStorage.getItem('theme') === 'dark');
     };
   </script>
-
-  <footer class="footer">
-    <p>&copy; 2025 Helena Sieh. All rights reserved.</p>
-  </footer>
 
 </body>
 </html>

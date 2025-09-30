@@ -1,30 +1,34 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My Website</title>
+  <title>Contact | Helena Sieh</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
-    /* Light mode variables */
     :root {
-      --bg-color: #ffffff;       /* white background for light mode */
-      --text-color: #222222;     /* dark text */
-      --nav-bg: #eeeeee;         /* light nav bar */
-      --nav-text: #007acc;       /* blue nav text */
+      --bg-color: #0a0f14;
+      --text-color: #cfd8dc;
+      --nav-bg: #1c1f26;
+      --nav-text: #00ffc3;
+      --accent-color: #00ffc3;
     }
 
-    /* Dark mode variables */
-    body.dark-mode {
-      --bg-color: #0a0f14;         /* dark, steel-like background */
-      --text-color: #cfd8dc;       /* light grey-blue text */
-      --nav-bg: #1c1f26;           /* slightly lighter nav bar */
-      --nav-text: #00ffc3;         /* neon cyan */
+    body.light-mode {
+      --bg-color: #ffffff;
+      --text-color: #222222;
+      --nav-bg: #f5f5f5;
+      --nav-text: #007acc;
+      --accent-color: #007acc;
     }
 
     body {
       background-color: var(--bg-color);
       color: var(--text-color);
-      font-family: Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 0;
       transition: background-color 0.3s ease, color 0.3s ease;
@@ -32,78 +36,95 @@
 
     .navbar {
       background-color: var(--nav-bg);
-      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
       position: sticky;
       top: 0;
       z-index: 1000;
-
-      display: flex;
-      align-items: center;
-      padding: 0 10px;
-    }
-
-    .navbar .nav-left {
-      display: flex;
-      gap: 10px;
-      flex-grow: 1;
     }
 
     .navbar a,
     .navbar button {
-      display: flex;
-      align-items: center;
       color: var(--nav-text);
-      text-align: center;
-      padding: 14px 20px;
       text-decoration: none;
+      padding: 14px 16px;
+      font-size: 16px;
       border: none;
       background: none;
-      font-size: 16px;
       cursor: pointer;
-      gap: 6px;
-      border-radius: 4px;
-      transition: background-color 0.3s;
     }
 
     .navbar a:hover,
     .navbar button:hover {
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: rgba(255, 255, 255, 0.05);
     }
 
     .toggle-btn {
-      margin-left: auto;
-      font-size: 18px;
-      user-select: none;
+      font-size: 20px;
+      transition: transform 0.2s;
     }
 
-    .external-link svg {
-      fill: var(--nav-text);
-      width: 18px;
-      height: 18px;
-      vertical-align: middle;
+    .toggle-btn:hover {
+      transform: scale(1.1);
     }
 
     .content {
-      padding: 20px;
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+      flex: 1;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 30px;
+      color: var(--accent-color);
     }
 
     .social-links {
       display: flex;
-      gap: 15px;
-      margin-top: 10px;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
     }
 
     .social-links a {
       color: var(--nav-text);
       text-decoration: none;
+      font-weight: 600;
+      font-size: 18px;
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-weight: 600;
+      gap: 10px;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a svg {
+      fill: var(--nav-text);
+      width: 24px;
+      height: 24px;
+      transition: transform 0.3s, fill 0.3s;
+    }
+
+    .social-links a:hover {
+      color: var(--accent-color);
     }
 
     .social-links a:hover svg {
-      fill: #00ffc3;
+      fill: var(--accent-color);
+      transform: scale(1.1);
+    }
+
+    .footer {
+      background-color: var(--nav-bg);
+      color: var(--text-color);
+      text-align: center;
+      padding: 8px;
+      font-size: 12px;
+      border-top: 1px solid rgba(255,255,255,0.1);
     }
 
     html, body {
@@ -111,91 +132,37 @@
       display: flex;
       flex-direction: column;
     }
-    
-    .content {
-      flex: 1; /* pushes footer down */
-    }
-    
-    .footer {
-      background-color: var(--nav-bg);
-      color: var(--text-color);
-      text-align: center;
-      padding: 8px;      /* thinner */
-      font-size: 12px;   /* smaller text */
-      border-top: 1px solid rgba(255,255,255,0.1);
+
+    @media (max-width: 600px) {
+      .social-links a {
+        font-size: 16px;
+      }
+
+      .social-links a svg {
+        width: 20px;
+        height: 20px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top navigation bar -->
+  <!-- Navbar -->
   <div class="navbar">
-    <div class="nav-left">
+    <div>
       <a href="index.html">Home</a>
       <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
       <a href="resume.html">Resume</a>
     </div>
-
-    <!-- Dark mode toggle button -->
-    <button class="toggle-btn" aria-label="Toggle dark/light mode" onclick="toggleTheme()">🌙</button>
+    <button class="toggle-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
   </div>
 
-  <!-- Main content -->
+  <!-- Main Content -->
   <div class="content">
     <h1>Contact</h1>
 
     <div class="social-links">
       <a href="https://www.linkedin.com/in/helena-sieh/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
-          <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11.75 19h-3v-9h3v9zm-1.5-10.3c-.96 0-1.75-.79-1.75-1.75s.79-1.75 1.75-1.75 1.75.79 1.75 1.75-.79 1.75-1.75 1.75zm13.25 10.3h-3v-4.5c0-1.08-.9-2-2-2s-2 .92-2 2v4.5h-3v-9h3v1.5c.67-1.07 2.42-1.5 3.5-1.5 2.48 0 4.5 1.94 4.5 4.5v4.5z"/>
-        </svg>
-        LinkedIn
-      </a>
-
-      <a href="https://github.com/Helena1899/hs_rep" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
-          <path d="M12 0c-6.62 0-12 5.38-12 12 0 5.3 3.438 9.8 8.205 11.385.6.11.82-.26.82-.577 0-.285-.01-1.04-.015-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.385-1.334-1.754-1.334-1.754-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.81 1.305 3.495.997.107-.774.42-1.305.763-1.605-2.665-.3-5.467-1.334-5.467-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.435.375.825 1.11.825 2.24 0 1.615-.015 2.92-.015 3.32 0 .315.21.69.825.57 4.765-1.59 8.205-6.09 8.205-11.385 0-6.62-5.38-12-12-12z"/>
-        </svg>
-        GitHub
-      </a>
-
-      <a href="mailto:helenasi@umich.edu" aria-label="Email">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
-          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-        </svg>
-        Email
-      </a>
-    </div>
-  </div>
-
-  <script>
-    function setTheme(isDark) {
-      document.body.classList.toggle('dark-mode', isDark);
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-
-      const btn = document.querySelector('.toggle-btn');
-      btn.textContent = isDark ? '☀️' : '🌙';
-    }
-
-    function toggleTheme() {
-      const isDark = document.body.classList.contains('dark-mode');
-      setTheme(!isDark);
-    }
-
-    window.onload = () => {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark') {
-        setTheme(true);
-      } else {
-        setTheme(false);
-      }
-    };
-  </script>
-
-  <footer class="footer">
-    <p>&copy; 2025 Helena Sieh. All rights reserved.</p>
-  </footer>
-
-</body>
-</html>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11.75 19h-3v-9h3v9zm-1.5-10.3c-.96 0-1.75-.79-1.75-1.75s.79-1.75 1.75-1.75 1.75.79 1.75 1.75-.79 1.75-1.75 1.75zm13.25 10.3h-3v-4.5c0

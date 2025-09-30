@@ -18,6 +18,7 @@
       --card-bg: #f8f9fa;
       --card-shadow: rgba(0, 0, 0, 0.1);
       --darkblue: #002b49;
+      --tag-text: #002b49; /* NEW: tag text color for light mode */
     }
 
     body.dark-mode {
@@ -29,6 +30,7 @@
       --card-bg: #1a1d23;
       --card-shadow: rgba(0, 255, 195, 0.1);
       --darkblue: #cfd8dc;
+      --tag-text: #0a0f14; /* NEW: tag text color for dark mode */
     }
 
     body {
@@ -162,7 +164,8 @@
     .skill-category h3 {
       color: var(--accent);
       margin-bottom: 20px;
-      font-size: 1.3em;
+      font-size: 1.4em;
+      text-shadow: 0 0 2px rgba(0,0,0,0.1); /* subtle shadow */
     }
 
     .skill-tags {
@@ -173,12 +176,19 @@
 
     .skill-tag {
       background: linear-gradient(135deg, var(--accent), rgba(0, 255, 195, 0.7));
-      color: var(--darkblue);
-      padding: 5px 10px;
+      color: var(--tag-text);
+      padding: 5px 12px;
       border-radius: 20px;
       font-size: 0.8em;
-      font-weight: 500;
+      font-weight: 600;
       cursor: default;
+      text-shadow: 0 0 1px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .skill-tag:hover {
+      transform: scale(1.05);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
     .project-card img {
@@ -290,8 +300,85 @@
   <section class="skills-section">
     <h2>Skills & Expertise</h2>
     <div class="skills-grid">
-      <!-- Add your existing skill-category blocks here (unchanged) -->
-      <div class="skill-category"> <h3>🤖 Robotics & Systems</h3> <div class="skill-tags"> <span class="skill-tag">ROS</span> <span class="skill-tag">ROS2</span> <span class="skill-tag">SLAM</span> <span class="skill-tag">RTAB-Map</span> <span class="skill-tag">Cartographer</span> <span class="skill-tag">Isaac Sim</span> <span class="skill-tag">PID Control</span> <span class="skill-tag">Sensor Fusion</span> <span class="skill-tag">Localization</span> <span class="skill-tag">Mapping</span> <span class="skill-tag">Odometry</span> <span class="skill-tag">GNSS</span> <span class="skill-tag">IMU</span> <span class="skill-tag">Jetson Orin</span> <span class="skill-tag">CUDA</span> <span class="skill-tag">Gazebo</span> <span class="skill-tag">ROS2 Bridge</span> <span class="skill-tag">Actuators</span> </div> </div> <div class="skill-category"> <h3>🧠 Computer Vision & AI</h3> <div class="skill-tags"> <span class="skill-tag">OpenCV</span> <span class="skill-tag">Open3D</span> <span class="skill-tag">YOLO</span> <span class="skill-tag">PyTorch</span> <span class="skill-tag">TensorFlow</span> <span class="skill-tag">CNNs</span> <span class="skill-tag">MediaPipe</span> <span class="skill-tag">OpenFace</span> <span class="skill-tag">Pose Estimation</span> <span class="skill-tag">Gaze Estimation</span> <span class="skill-tag">RGB-D Processing</span> <span class="skill-tag">ArUco</span> <span class="skill-tag">AprilTags</span> <span class="skill-tag">scikit-learn</span> </div> </div> <div class="skill-category"> <h3>💻 Programming & Tools</h3> <div class="skill-tags"> <span class="skill-tag">Python</span> <span class="skill-tag">C++</span> <span class="skill-tag">Bash</span> <span class="skill-tag">Shell</span> <span class="skill-tag">Git</span> <span class="skill-tag">GitHub</span> <span class="skill-tag">Linux</span> <span class="skill-tag">rosbag</span> <span class="skill-tag">Isaac Sim APIs</span> <span class="skill-tag">NumPy</span> </div> </div> <div class="skill-category"> <h3>🔧 Hardware & Prototyping</h3> <div class="skill-tags"> <span class="skill-tag">SolidWorks</span> <span class="skill-tag">Fusion 360</span> <span class="skill-tag">3D Printing</span> <span class="skill-tag">CNC</span> <span class="skill-tag">Laser Cutting</span> <span class="skill-tag">Arduino</span> <span class="skill-tag">Raspberry Pi</span> <span class="skill-tag">LiDAR</span> <span class="skill-tag">RGB-D Cameras</span> <span class="skill-tag">Thermal Cameras</span> <span class="skill-tag">Toyota HSR</span> <span class="skill-tag">Sensor Integration</span> <span class="skill-tag">GD&T</span> <span class="skill-tag">Meshlab</span> </div> </div>
+      <div class="skill-category">
+        <h3>🤖 Robotics & Systems</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">ROS</span>
+          <span class="skill-tag">ROS2</span>
+          <span class="skill-tag">SLAM</span>
+          <span class="skill-tag">RTAB-Map</span>
+          <span class="skill-tag">Cartographer</span>
+          <span class="skill-tag">Isaac Sim</span>
+          <span class="skill-tag">PID Control</span>
+          <span class="skill-tag">Sensor Fusion</span>
+          <span class="skill-tag">Localization</span>
+          <span class="skill-tag">Mapping</span>
+          <span class="skill-tag">Odometry</span>
+          <span class="skill-tag">GNSS</span>
+          <span class="skill-tag">IMU</span>
+          <span class="skill-tag">Jetson Orin</span>
+          <span class="skill-tag">CUDA</span>
+          <span class="skill-tag">Gazebo</span>
+          <span class="skill-tag">ROS2 Bridge</span>
+          <span class="skill-tag">Actuators</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3>🧠 Computer Vision & AI</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">OpenCV</span>
+          <span class="skill-tag">Open3D</span>
+          <span class="skill-tag">YOLO</span>
+          <span class="skill-tag">PyTorch</span>
+          <span class="skill-tag">TensorFlow</span>
+          <span class="skill-tag">CNNs</span>
+          <span class="skill-tag">MediaPipe</span>
+          <span class="skill-tag">OpenFace</span>
+          <span class="skill-tag">Pose Estimation</span>
+          <span class="skill-tag">Gaze Estimation</span>
+          <span class="skill-tag">RGB-D Processing</span>
+          <span class="skill-tag">ArUco</span>
+          <span class="skill-tag">AprilTags</span>
+          <span class="skill-tag">scikit-learn</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3>💻 Programming & Tools</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">C++</span>
+          <span class="skill-tag">Bash</span>
+          <span class="skill-tag">Shell</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">GitHub</span>
+          <span class="skill-tag">Linux</span>
+          <span class="skill-tag">rosbag</span>
+          <span class="skill-tag">Isaac Sim APIs</span>
+          <span class="skill-tag">NumPy</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3>🔧 Hardware & Prototyping</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">SolidWorks</span>
+          <span class="skill-tag">Fusion 360</span>
+          <span class="skill-tag">3D Printing</span>
+          <span class="skill-tag">CNC</span>
+          <span class="skill-tag">Laser Cutting</span>
+          <span class="skill-tag">Arduino</span>
+          <span class="skill-tag">Raspberry Pi</span>
+          <span class="skill-tag">LiDAR</span>
+          <span class="skill-tag">RGB-D Cameras</span>
+          <span class="skill-tag">Thermal Cameras</span>
+          <span class="skill-tag">Toyota HSR</span>
+          <span class="skill-tag">Sensor Integration</span>
+          <span class="skill-tag">GD&T</span>
+          <span class="skill-tag">Meshlab</span>
+        </div>
+      </div>
     </div>
   </section>
 

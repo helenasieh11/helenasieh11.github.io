@@ -574,6 +574,84 @@
       text-align: center;
     }
 
+    /* ─── TEAMS ─── */
+    .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .team-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+
+    .team-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px color-mix(in srgb, var(--accent) 10%, transparent);
+    }
+
+    .team-card-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .team-emoji {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      transition: background 0.25s, border-color 0.25s;
+    }
+
+    .team-card:hover .team-emoji {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+    }
+
+    .team-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--heading);
+      line-height: 1.3;
+    }
+
+    .team-role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .team-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .team-dates {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
     /* ─── FOOTER ─── */
     footer {
       position: relative;
@@ -731,10 +809,10 @@
       <h2 class="section-title reveal">What's new.</h2>
       <div class="news-list reveal">
         <div class="news-entry">
-          <div class="news-date">March 2, 2026</div>
+          <div class="news-date">Sep 30, 2025</div>
           <div class="news-content">
-            <h4>Paper submitted to conference! <span class="news-badge">Under Review</span></h4>
-            <p>Co-authored a paper submitted to the conference, focusing on social perception and human-robot collaboration.</p>
+            <h4>Paper submitted to HRI 2026 <span class="news-badge">Under Review</span></h4>
+            <p>Co-authored a paper submitted to the ACM/IEEE International Conference on Human-Robot Interaction, focusing on social perception and human-robot collaboration.</p>
           </div>
         </div>
         <!-- add more entries here as your career progresses -->
@@ -743,9 +821,68 @@
 
     <div class="divider"><hr></div>
 
+    <!-- ─── TEAMS ─── -->
+    <section id="teams">
+      <p class="section-label reveal">03 — Involvement</p>
+      <h2 class="section-title reveal">Teams & clubs.</h2>
+      <div class="teams-grid">
+
+        <a href="https://mavric.si.umich.edu/" target="_blank" class="team-card reveal">
+          <div class="team-card-top">
+            <div class="team-emoji">🔬</div>
+            <div>
+              <div class="team-name">MAVRIC Lab</div>
+              <div class="team-role">Research Member</div>
+            </div>
+          </div>
+          <p class="team-desc">Michigan Autonomous Vehicle Research and Interaction Center — researching social perception and human-robot interaction.</p>
+          <div class="team-dates">2024 – Present</div>
+        </a>
+
+        <a href="https://www.umarv.com/" target="_blank" class="team-card reveal">
+          <div class="team-card-top">
+            <div class="team-emoji">🚗</div>
+            <div>
+              <div class="team-name">UMARV</div>
+              <div class="team-role">Sensor & Navigation Engineer</div>
+            </div>
+          </div>
+          <p class="team-desc">University of Michigan Autonomous Robotic Vehicle — building sensor fusion and navigation systems for competitive autonomous vehicles.</p>
+          <div class="team-dates">Sept 2024 – May 2025</div>
+        </a>
+
+        <a href="#" class="team-card reveal">
+          <div class="team-card-top">
+            <div class="team-emoji">🤖</div>
+            <div>
+              <div class="team-name">Wolverbots</div>
+              <div class="team-role">Member</div>
+            </div>
+          </div>
+          <p class="team-desc">University of Michigan robotics club focused on hands-on robot design, building, and competition.</p>
+          <div class="team-dates">2024 – Present</div>
+        </a>
+
+        <a href="#" class="team-card reveal">
+          <div class="team-card-top">
+            <div class="team-emoji">⚽</div>
+            <div>
+              <div class="team-name">Wolverine Futsal Club</div>
+              <div class="team-role">Co-Secretary</div>
+            </div>
+          </div>
+          <p class="team-desc">University of Michigan's competitive futsal club — bringing fast-paced indoor football to campus. Three years of futsal experience in Barcelona.</p>
+          <div class="team-dates">2024 – Present</div>
+        </a>
+
+      </div>
+    </section>
+
+    <div class="divider"><hr></div>
+
     <!-- ─── SKILLS ─── -->
     <section id="skills">
-      <p class="section-label reveal">03 — Expertise</p>
+      <p class="section-label reveal">04 — Expertise</p>
       <h2 class="section-title reveal">Skills & tools.</h2>
       <div class="skills-grid">
 
@@ -830,7 +967,7 @@
 
     <!-- ─── PROJECTS ─── -->
     <section id="projects">
-      <p class="section-label reveal">04 — Work</p>
+      <p class="section-label reveal">05 — Work</p>
       <h2 class="section-title reveal">Featured projects.</h2>
       <div class="projects-grid">
 
@@ -838,8 +975,8 @@
           <div class="project-img">🤝</div>
           <div class="project-body">
             <p class="project-category">Human-Robot Interaction</p>
-            <h3>Human Robot Interaction Research</h3>
-            <p>Developing perception pipelines for the Toyota HSR to estimate human pose, gaze, and engagement in shared environments.</p>
+            <h3>Social Perception Research</h3>
+            <p>Developing perception pipelines for the Toyota HSR to understand human pose, gaze, and intent in shared environments.</p>
             <div class="project-arrow">View project →</div>
           </div>
         </a>
@@ -859,7 +996,7 @@
           <div class="project-body">
             <p class="project-category">Computer Vision</p>
             <h3>Gaze & Pose Estimation</h3>
-            <p>Using OpenFace, MediaPipe, and CNN models to extract meaningful behavioral signals for robot decision-making.</p>
+            <p>Using OpenFace, MediaPipe, and custom CNN models to extract meaningful behavioral signals for robot decision-making.</p>
             <div class="project-arrow">View project →</div>
           </div>
         </a>

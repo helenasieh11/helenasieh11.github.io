@@ -1,275 +1,577 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Projects | Helena Sieh</title>
 
-  <!-- Google Fonts & AOS CSS -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
+    /* ─── TOKENS (mirrored from index.html) ─── */
     :root {
-      --bg-color: #0a0f14;
-      --text-color: #cfd8dc;
-      --nav-bg: #1c1f26;
-      --nav-text: #00ffc3;
-      --card-bg: #131921;
-      --card-hover: #1e2a38;
-      --accent-color: #00ffc3;
+      --bg:        #0c0e13;
+      --surface:   #13161d;
+      --border:    rgba(255,255,255,0.07);
+      --text:      #e8eaf0;
+      --muted:     #6b7280;
+      --accent:    #00e5a0;
+      --accent2:   #7c6ff7;
+      --warm:      #f5a623;
+      --heading:   #ffffff;
+      --card:      #181b23;
+      --nav-h:     64px;
+      --radius:    14px;
+      --transition: 0.35s cubic-bezier(0.22,1,0.36,1);
     }
 
-    body.light-mode {
-      --bg-color: #ffffff;
-      --text-color: #222222;
-      --nav-bg: #f5f5f5;
-      --nav-text: #007acc;
-      --card-bg: #f9f9f9;
-      --card-hover: #eaeaea;
-      --accent-color: #007acc;
+    [data-theme="light"] {
+      --bg:       #f5f4ef;
+      --surface:  #ffffff;
+      --border:   rgba(0,0,0,0.08);
+      --text:     #2a2d35;
+      --muted:    #888fa0;
+      --accent:   #00a872;
+      --accent2:  #5a4fd9;
+      --warm:     #d4840f;
+      --heading:  #0c0e13;
+      --card:     #ffffff;
     }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .navbar {
-      background-color: var(--nav-bg);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 20px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .navbar a,
-    .navbar button {
-      color: var(--nav-text);
-      text-decoration: none;
-      padding: 14px 16px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
       font-size: 16px;
-      border: none;
-      background: none;
-      cursor: pointer;
+      line-height: 1.7;
+      transition: background var(--transition), color var(--transition);
+      overflow-x: hidden;
     }
 
-    .navbar a:hover,
-    .navbar button:hover {
-      background-color: rgba(255, 255, 255, 0.05);
+    /* ─── BG EFFECTS ─── */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 64px 64px;
+      opacity: 0.5;
     }
 
-    .toggle-btn {
-      font-size: 20px;
-      transition: transform 0.2s;
+    .bg-glow {
+      position: fixed; width: 600px; height: 600px; border-radius: 50%;
+      filter: blur(120px); pointer-events: none; z-index: 0; opacity: 0.1;
+      top: -100px; right: -100px; background: var(--accent2);
     }
 
-    .toggle-btn:hover {
-      transform: scale(1.1);
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h); z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(20px, 5vw, 60px);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px);
+      background: color-mix(in srgb, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
     }
 
-    .content {
-      padding: 40px 20px;
-      max-width: 1000px;
-      margin: auto;
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem; color: var(--heading); text-decoration: none;
+      letter-spacing: -0.01em;
     }
 
-    h1 {
-      text-align: center;
-      margin-bottom: 50px;
-      font-size: 36px;
-      color: var(--accent-color);
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+
+    .nav-links a {
+      font-size: 0.875rem; font-weight: 500; color: var(--muted);
+      text-decoration: none; padding: 6px 14px; border-radius: 8px;
+      transition: color 0.2s, background 0.2s; letter-spacing: 0.01em;
     }
 
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--heading); background: var(--border);
+    }
+
+    .nav-links a.active { color: var(--accent); }
+
+    .theme-btn {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 7px 10px; cursor: pointer;
+      font-size: 1rem; color: var(--text); transition: all 0.2s; margin-left: 8px;
+    }
+
+    .theme-btn:hover { border-color: var(--accent); }
+
+    /* ─── PAGE HEADER ─── */
+    .page-header {
+      position: relative; z-index: 1;
+      padding: calc(var(--nav-h) + 60px) clamp(20px, 5vw, 60px) 60px;
+      max-width: 1100px; margin: 0 auto;
+      opacity: 0; animation: fadeUp 0.7s 0.1s forwards;
+    }
+
+    .page-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem; color: var(--accent);
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px;
+    }
+
+    .page-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 1.05; letter-spacing: -0.03em;
+      color: var(--heading);
+    }
+
+    .page-title em { font-style: italic; color: var(--accent); }
+
+    .page-subtitle {
+      margin-top: 20px; font-size: 1.05rem; color: var(--muted);
+      max-width: 480px; font-weight: 300;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    main {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 60px) 120px;
+    }
+
+    /* ─── PROJECT CARD ─── */
     .project-card {
-      background-color: var(--card-bg);
-      padding: 25px;
-      border-radius: 10px;
-      margin-bottom: 40px;
-      transition: background-color 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      transition: border-color var(--transition);
+      overflow: hidden;
+
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s var(--transition), transform 0.6s var(--transition),
+                  border-color 0.25s, box-shadow 0.25s;
     }
 
-    .project-card:hover {
-      background-color: var(--card-hover);
+    .project-card.visible { opacity: 1; transform: translateY(0); }
+    .project-card.open { border-color: var(--accent); }
+
+    .project-card.open {
+      box-shadow: 0 0 0 1px var(--accent), 0 8px 32px color-mix(in srgb, var(--accent) 10%, transparent);
     }
 
+    /* ─── CARD HEADER ─── */
     .card-header {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1fr auto;
       align-items: center;
+      gap: 16px;
+      padding: 24px 28px;
       cursor: pointer;
+      user-select: none;
+      transition: background 0.2s;
+    }
+
+    .card-header:hover { background: var(--surface); }
+
+    .card-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 6px;
     }
 
     .card-title {
-      font-size: 20px;
-      font-weight: 600;
-      color: var(--accent-color);
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.35rem; color: var(--heading);
+      letter-spacing: -0.01em; line-height: 1.25;
     }
 
-    .card-title small {
-      color: var(--text-color);
-      font-weight: 400;
-      font-size: 14px;
-      margin-left: 8px;
+    .card-date {
+      font-size: 0.82rem; color: var(--muted);
+      font-weight: 400; margin-top: 4px;
     }
 
-    .expand-icon {
-      font-size: 18px;
-      transition: transform 0.3s ease;
+    .card-toggle {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; color: var(--muted);
+      transition: all 0.3s;
+      flex-shrink: 0;
     }
 
-    .project-card.expanded .expand-icon {
-      transform: rotate(90deg);
+    .project-card.open .card-toggle {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border-color: var(--accent); color: var(--accent);
+      transform: rotate(45deg);
     }
 
+    /* ─── CARD BODY ─── */
     .card-body {
-      display: none;
-      margin-top: 15px;
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.45s cubic-bezier(0.22,1,0.36,1);
     }
 
-    .project-card.expanded .card-body {
-      display: block;
+    .project-card.open .card-body { grid-template-rows: 1fr; }
+
+    .card-body-inner {
+      overflow: hidden;
     }
 
-    .image-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-top: 20px;
-      justify-content: center;
+    .card-body-content {
+      padding: 0 28px 32px;
+      border-top: 1px solid var(--border);
     }
 
-    .image-container {
-      flex: 1 1 300px;
-      text-align: center;
+    .card-body-content p,
+    .card-body-content li {
+      font-size: 0.95rem; color: var(--text); line-height: 1.75;
     }
 
-    .image-container img {
-      width: 100%;
-      max-width: 300px;
-      height: 350px;
-      object-fit: cover;
-      border-radius: 5px;
-      border: 1px solid #aaa;
-      transition: transform 0.3s ease;
+    .card-body-content p { margin: 18px 0 0; }
+
+    .card-body-content ul {
+      margin: 16px 0 0 0; padding-left: 0; list-style: none;
+      display: flex; flex-direction: column; gap: 8px;
     }
 
-    .image-container img:hover {
-      transform: scale(1.05);
+    .card-body-content li {
+      display: flex; gap: 10px; align-items: flex-start;
     }
 
-    .image-label {
-      margin-top: 8px;
-      font-size: 14px;
-      color: #888;
+    .card-body-content li::before {
+      content: "—";
+      color: var(--accent); flex-shrink: 0; margin-top: 1px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
     }
 
-    iframe {
-      margin-top: 20px;
-      width: 100%;
-      border-radius: 6px;
+    .card-link {
+      color: var(--accent); text-decoration: none; font-weight: 500;
+      border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+      transition: border-color 0.2s;
     }
 
-    .external-link {
-      color: var(--accent-color);
-      text-decoration: underline;
+    .card-link:hover { border-color: var(--accent); }
+
+    /* ─── IMAGE GRID ─── */
+    .img-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px; margin-top: 24px;
     }
 
-    .external-link:hover {
-      opacity: 0.8;
+    .img-block {
+      border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
     }
 
-    .footer {
-      background-color: var(--nav-bg);
-      color: var(--text-color);
-      text-align: center;
-      padding: 8px;
-      font-size: 12px;
-      border-top: 1px solid rgba(255,255,255,0.1);
+    .img-block img {
+      width: 100%; aspect-ratio: 4/3;
+      object-fit: cover; display: block;
+      transition: transform 0.4s var(--transition);
     }
 
-    @media (max-width: 600px) {
-      .card-title {
-        font-size: 18px;
-      }
+    .img-block:hover img { transform: scale(1.04); }
+
+    .img-caption {
+      padding: 8px 12px;
+      font-size: 0.75rem; color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.03em;
+    }
+
+    /* ─── EMBED SECTION ─── */
+    .embed-wrap {
+      margin-top: 24px;
+      border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .embed-label {
+      padding: 10px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--muted);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .embed-wrap iframe {
+      width: 100%; display: block;
+      border: none; background: var(--surface);
+    }
+
+    /* ─── SECTION LABEL ─── */
+    .body-section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+      margin: 24px 0 12px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 28px clamp(20px, 5vw, 60px);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.82rem; color: var(--muted);
+    }
+
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a {
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 480px) {
+      .nav-links { display: none; }
+      .card-header { padding: 18px 20px; }
+      .card-body-content { padding: 0 20px 24px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navigation -->
-  <div class="navbar">
-    <div>
-      <a href="index.html">Home</a>
-      <a href="projects.html">Projects</a>
-      <a href="contact.html">Contact</a>
-      <a href="resume.html">Resume</a>
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="index.html" class="nav-logo">Helena Sieh</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle theme">☀️</button>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <p class="page-eyebrow">// Portfolio</p>
+    <h1 class="page-title">My <em>Projects.</em></h1>
+    <p class="page-subtitle">Research, engineering, and internship work — click any card to expand.</p>
+  </div>
+
+  <!-- PROJECTS -->
+  <main>
+
+    <!-- ── Project 1: Tour Guide Robot ── -->
+    <div class="project-card" data-index="0">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div>
+          <p class="card-meta">Human-Robot Interaction · Research</p>
+          <h2 class="card-title">Tour Guide Robot</h2>
+          <p class="card-date">May 2025 – Present</p>
+        </div>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="card-body-content">
+            <p>
+              Study investigating the effects of a mixed-agent team on user satisfaction and learning performance
+              in robot-guided tour scenarios. Introduces a novel metric, "Following," based on observable human behaviors.
+            </p>
+            <p class="body-section-label">Contributions</p>
+            <ul>
+              <li>Hands-on experience with Toyota HSR in ROS Noetic framework.</li>
+              <li>ArUco marker detection with OpenCV 3.0 and PID control for head alignment.</li>
+              <li>Angle of rotation measurement to quantify "Following" behavior.</li>
+              <li>Human pose &amp; facial expression tracking with OpenPose and MediaPipe.</li>
+              <li>User experiment design and data analysis.</li>
+            </ul>
+
+            <p class="body-section-label">Media</p>
+            <div class="img-grid">
+              <div class="img-block">
+                <img src="https://github.com/user-attachments/assets/59caac8c-e485-4115-b980-16ed2094ae46" alt="Robot projecting avatar">
+                <div class="img-caption">Robot projecting virtual avatar</div>
+              </div>
+              <div class="img-block">
+                <img src="https://i.postimg.cc/pTV0vjMt/Screenshot-2025-09-22-at-10-52-08-PM.png" alt="Point cloud reconstruction">
+                <div class="img-caption">Point Cloud Reconstruction</div>
+              </div>
+            </div>
+
+            <p class="body-section-label">Demo Video</p>
+            <div class="embed-wrap">
+              <div class="embed-label">▶ Robot Tour Guide Demo</div>
+              <iframe src="https://drive.google.com/file/d/1cIRN7EqfuaCS5eBqZjPaujcDcbuMu6Em/preview" height="400" allow="autoplay"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <button class="toggle-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
-  </div>
 
-  <!-- Content -->
-  <div class="content">
-    <h1 data-aos="fade-down">My Projects</h1>
+    <!-- ── Project 2: VPT ── -->
+    <div class="project-card" data-index="1">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div>
+          <p class="card-meta">Computer Vision · SLAM</p>
+          <h2 class="card-title">Extracting Human Visual Perspective</h2>
+          <p class="card-date">Sept 2024 – May 2025</p>
+        </div>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="card-body-content">
+            <p>
+              A multi-modal human VPT extraction algorithm using VSLAM and RGB-D data.
+              Estimates gaze direction and head pose to understand human perspective in real time.
+              Validated in simulated and real-world settings.
+            </p>
 
-    <!-- 🔽 Paste your project cards here exactly as they are 🔽 -->
-    <!-- ✅ Already well-structured, no change needed -->
-    <!-- 🔼 Example: Tour Guide Robot, VPT, etc. 🔼 -->
-    <!-- Main Content --> <!-- Project 1 --> <div class="project-card" data-aos="fade-up"> <div class="card-header" onclick="toggleCard(this)"> <span class="card-title">Tour Guide Robot<small> (May 2025 - Present)</small></span> <span class="expand-icon">▶</span> </div> <div class="card-body"> <p> Study investigates the effects of a mixed-agent team on user satisfaction and learning performance in robot-guided tour scenarios, and introduces a novel metric, "Following," based on observable human behaviors. </p> <ul> <li>Hands-on experience with Toyota HSR in ROS Noetic framework.</li> <li>ArUco marker detection with OpenCV 3.0 and PID control for head alignment.</li> <li>Angle of rotation measurement to quantify "Following" behavior.</li> <li>Human pose & facial expression tracking with OpenPose and MediaPipe.</li> <li>User experiment design and data analysis.</li> </ul> <div class="image-row"> <div class="image-container"> <img src="https://github.com/user-attachments/assets/59caac8c-e485-4115-b980-16ed2094ae46" alt="Robot projecting avatar"> <div class="image-label">Robot projecting virtual avatar</div> </div> <div class="image-container"> <img src="https://i.postimg.cc/pTV0vjMt/Screenshot-2025-09-22-at-10-52-08-PM.png" alt="Point cloud reconstruction"> <div class="image-label">Point Cloud Reconstruction</div> </div> <p> Watch the video below to see a short demo of the robot tour guide with the physical robot and the virtual robot:</p> <iframe src="https://drive.google.com/file/d/1cIRN7EqfuaCS5eBqZjPaujcDcbuMu6Em/view" width="640" height="480" allow="autoplay"> </iframe> </div> </div> </div> <!-- Project 2 --> <div class="project-card" data-aos="fade-up" data-aos-delay="100"> <div class="card-header" onclick="toggleCard(this)"> <span class="card-title">Extracting Human Visual Perspective <small>(Sept 2024 - May 2025)</small></span> <span class="expand-icon">▶</span> </div> <div class="card-body"> <p> A multi-modal human VPT extraction algorithm using VSLAM and RGB-D data. It estimates gaze direction and head pose to understand human perspective in real time. Validated in simulated and real-world settings. </p> <a href="https://ibb.co/JjS27991"> <img src="https://i.ibb.co/yFx5yrr9/Screenshot-2025-08-22-at-7-55-56-PM.png" alt="VPT Estimation" style="display: block; margin: 0 auto; width: 400px; height: 300px;" border="0"> </a> <div class="image-label" style="text-align: center;">VPT Estimation Algorithm</div> <p> Look at our poster below for more information about this project: <div style="text-align: center; margin-top: 20px;"> <iframe src="HS_2425_UROP_Poster.pdf" style="width:100%; height:600px;" frameborder="0"></iframe> <div class="image-label">UROP Spring Symposium Poster (PDF)</div> </div> </p> </div> </div> <!-- Project 3 --> <div class="project-card" data-aos="fade-up" data-aos-delay="200"> <div class="card-header" onclick="toggleCard(this)"> <span class="card-title">Sensor & Navigation Engineer <small>(Sept. 2024 - May 2024)</small></span> <span class="expand-icon">▶</span> </div> <div class="card-body"> <p> <a href="https://www.umarv.com/" target="_blank" class="external-link">Autonomous Robotic Vehicle</a> - Ann Arbor, MI. Working on sensor fusion systems and autonomous navigation algorithms for competitive robotics applications. </p> <ul> <li>Implemented a sensor fusion system integrating GNSS, IMU, LiDAR for real-time SLAM and autonomous navigation.</li> <li>Tuned Kalman filters and optimized occupancy grids to improve localization accuracy and mapping consistency.</li> <li>Developed path planning algorithms for autonomous vehicle navigation in complex environments.</li> <li>Collaborated with multidisciplinary team on system integration and testing protocols.</li> <li>Optimized sensor calibration procedures to enhance overall system performance.</li> </ul> </div> </div> <!-- Project 4 --> <div class="project-card" data-aos="fade-up" data-aos-delay="300"> <div class="card-header" onclick="toggleCard(this)"> <span class="card-title">Haptic Interface Design (HID) Intern <small>(June 2024 - August 2024)</small></span> <span class="expand-icon">▶</span> </div> <div class="card-body"> <p> <a href="https://www.jnj.com/medtech" target="_blank" class="external-link">Johnson & Johnson MedTech R&D</a> - Santa Clara, CA. Worked on haptic interface design for medical devices, focusing on improving device ergonomics and user experience through mechanical engineering solutions. </p> <ul> <li>Reduced device setup time by 50% by prototyping custom motor connectors and shaft fixtures.</li> <li>Improved joint durability by 150% through mechanical testing and alloy screw replacement.</li> <li>Developed custom motor mounts with integrated torque sensors for friction measurement, optimizing motor selection.</li> <li>Collaborated with cross-functional teams on medical device prototyping and testing.</li> <li>Conducted mechanical analysis and component validation for haptic feedback systems.</li> </ul> <p> Look at the pptx slides below for more information about this project: <div style="text-align: center; margin-top: 20px;"> <iframe src="HS_jnj_final_presentation.pdf" style="width:100%; height:600px;" frameborder="0"></iframe> </div> </p> </div> </div> </div>
+            <p class="body-section-label">Visualization</p>
+            <div class="img-grid">
+              <div class="img-block">
+                <a href="https://ibb.co/JjS27991" target="_blank">
+                  <img src="https://i.ibb.co/yFx5yrr9/Screenshot-2025-08-22-at-7-55-56-PM.png" alt="VPT Estimation Algorithm">
+                </a>
+                <div class="img-caption">VPT Estimation Algorithm</div>
+              </div>
+            </div>
 
-    <!-- Keep your existing project-card blocks -->
+            <p class="body-section-label">UROP Poster</p>
+            <div class="embed-wrap">
+              <div class="embed-label">📄 Spring Symposium Poster (PDF)</div>
+              <iframe src="HS_2425_UROP_Poster.pdf" height="600"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  </div>
+    <!-- ── Project 3: ARV ── -->
+    <div class="project-card" data-index="2">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div>
+          <p class="card-meta">Autonomous Navigation · Sensor Fusion</p>
+          <h2 class="card-title">Sensor &amp; Navigation Engineer</h2>
+          <p class="card-date">Sept 2024 – May 2024</p>
+        </div>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="card-body-content">
+            <p>
+              <a href="https://www.umarv.com/" target="_blank" class="card-link">Autonomous Robotic Vehicle</a>
+              — Ann Arbor, MI. Working on sensor fusion systems and autonomous navigation algorithms for competitive robotics applications.
+            </p>
+            <p class="body-section-label">Contributions</p>
+            <ul>
+              <li>Implemented a sensor fusion system integrating GNSS, IMU, and LiDAR for real-time SLAM and autonomous navigation.</li>
+              <li>Tuned Kalman filters and optimized occupancy grids to improve localization accuracy and mapping consistency.</li>
+              <li>Developed path planning algorithms for autonomous vehicle navigation in complex environments.</li>
+              <li>Collaborated with a multidisciplinary team on system integration and testing protocols.</li>
+              <li>Optimized sensor calibration procedures to enhance overall system performance.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <p>&copy; 2025 Helena Sieh. All rights reserved.</p>
+    <!-- ── Project 4: J&J Internship ── -->
+    <div class="project-card" data-index="3">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div>
+          <p class="card-meta">Internship · MedTech R&D</p>
+          <h2 class="card-title">Haptic Interface Design Intern</h2>
+          <p class="card-date">June 2024 – August 2024</p>
+        </div>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="card-body-content">
+            <p>
+              <a href="https://www.jnj.com/medtech" target="_blank" class="card-link">Johnson &amp; Johnson MedTech R&amp;D</a>
+              — Santa Clara, CA. Worked on haptic interface design for medical devices, improving ergonomics and user experience through mechanical engineering solutions.
+            </p>
+            <p class="body-section-label">Contributions</p>
+            <ul>
+              <li>Reduced device setup time by 50% by prototyping custom motor connectors and shaft fixtures.</li>
+              <li>Improved joint durability by 150% through mechanical testing and alloy screw replacement.</li>
+              <li>Developed custom motor mounts with integrated torque sensors for friction measurement, optimizing motor selection.</li>
+              <li>Collaborated with cross-functional teams on medical device prototyping and testing.</li>
+              <li>Conducted mechanical analysis and component validation for haptic feedback systems.</li>
+            </ul>
+
+            <p class="body-section-label">Presentation</p>
+            <div class="embed-wrap">
+              <div class="embed-label">📄 Final Presentation Slides (PDF)</div>
+              <iframe src="HS_jnj_final_presentation.pdf" height="600"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 Helena Sieh</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="resume.html">Resume</a>
+      <a href="contact.html">Contact</a>
+    </div>
   </footer>
 
-  <!-- Theme Toggle -->
   <script>
-    const toggleBtn = document.getElementById('themeToggle');
-    function applyTheme(theme) {
-      document.body.classList.toggle('light-mode', theme === 'light');
-      toggleBtn.textContent = theme === 'light' ? '🌙' : '☀️';
-      localStorage.setItem('theme', theme);
+    /* ─ Theme ─ */
+    function applyTheme(dark) {
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      document.getElementById('themeBtn').textContent = dark ? '☀️' : '🌙';
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
     }
-
     function toggleTheme() {
-      const isLight = document.body.classList.contains('light-mode');
-      applyTheme(isLight ? 'dark' : 'light');
+      applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
     }
+    const saved = localStorage.getItem('theme');
+    applyTheme(saved ? saved === 'dark' : true);
 
-    window.addEventListener('DOMContentLoaded', () => {
-      const savedTheme = localStorage.getItem('theme') || 'dark';
-      applyTheme(savedTheme);
-    });
-  </script>
-
-  <!-- Expand/Collapse Script -->
-  <script>
+    /* ─ Expand / Collapse ─ */
     function toggleCard(headerEl) {
       const card = headerEl.closest('.project-card');
-      card.classList.toggle('expanded');
+      card.classList.toggle('open');
     }
-  </script>
 
-  <!-- AOS JS -->
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({
-      duration: 700,
-      once: true,
-    });
+    /* ─ Scroll reveal ─ */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const delay = (e.target.dataset.index || 0) * 80;
+          setTimeout(() => e.target.classList.add('visible'), delay);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.project-card').forEach(el => observer.observe(el));
   </script>
 </body>
 </html>

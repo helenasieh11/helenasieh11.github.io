@@ -1,410 +1,920 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta name="google-site-verification" content="PRssJExYQ-Kw-xuMcvIraw2ItU1BjJ6umJ4DFAiKCm8" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Helena Sieh | Robotics Portfolio</title>
+  <meta name="google-site-verification" content="PRssJExYQ-Kw-xuMcvIraw2ItU1BjJ6umJ4DFAiKCm8" />
+  <title>Helena Sieh | Robotics Engineer</title>
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
+    /* ─── TOKENS ─── */
     :root {
-      --bg-color: #ffffff;
-      --text-color: #000000;
-      --nav-bg: #e0e0e0;
-      --nav-text: #000000;
-      --accent: #00ffc3;
-      --card-bg: #f8f9fa;
-      --card-shadow: rgba(0, 0, 0, 0.1);
-      --darkblue: #002b49;
-      --tag-text: #002b49; /* NEW: tag text color for light mode */
+      --bg:        #0c0e13;
+      --surface:   #13161d;
+      --border:    rgba(255,255,255,0.07);
+      --text:      #e8eaf0;
+      --muted:     #6b7280;
+      --accent:    #00e5a0;
+      --accent2:   #7c6ff7;
+      --warm:      #f5a623;
+      --heading:   #ffffff;
+      --card:      #181b23;
+      --nav-h:     64px;
+      --radius:    14px;
+      --transition: 0.35s cubic-bezier(0.22,1,0.36,1);
     }
 
-    body.dark-mode {
-      --bg-color: #0a0f14;
-      --text-color: #cfd8dc;
-      --nav-bg: #1c1f26;
-      --nav-text: #00ffc3;
-      --accent: #00ffc3;
-      --card-bg: #1a1d23;
-      --card-shadow: rgba(0, 255, 195, 0.1);
-      --darkblue: #cfd8dc;
-      --tag-text: #0a0f14; /* NEW: tag text color for dark mode */
+    [data-theme="light"] {
+      --bg:       #f5f4ef;
+      --surface:  #ffffff;
+      --border:   rgba(0,0,0,0.08);
+      --text:     #2a2d35;
+      --muted:    #888fa0;
+      --accent:   #00a872;
+      --accent2:  #5a4fd9;
+      --warm:     #d4840f;
+      --heading:  #0c0e13;
+      --card:     #ffffff;
     }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: 'Inter', sans-serif;
-      line-height: 1.6;
-      margin: 0;
-      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      transition: background var(--transition), color var(--transition);
+      overflow-x: hidden;
     }
 
-    .navbar {
-      background-color: var(--nav-bg);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+    /* ─── ANIMATED BACKGROUND ─── */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 64px 64px;
+      opacity: 0.5;
+      transition: opacity var(--transition);
+    }
+
+    .bg-glow {
+      position: fixed;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.12;
+      top: -100px; right: -100px;
+      background: var(--accent2);
+      transition: background var(--transition);
+    }
+
+    .bg-glow2 {
+      position: fixed;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.08;
+      bottom: 10%; left: -100px;
+      background: var(--accent);
+    }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      z-index: 100;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 16px;
+      padding: 0 clamp(20px, 5vw, 60px);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px);
+      background: color-mix(in srgb, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
     }
 
-    .nav-left, .nav-right {
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--heading);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 4px;
+      list-style: none;
     }
 
-    .navbar a, .navbar button {
-      color: var(--nav-text);
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
       text-decoration: none;
-      padding: 14px 10px;
-      font-size: 16px;
-      background: none;
-      border: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links a:hover {
+      color: var(--heading);
+      background: var(--border);
+    }
+
+    .theme-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 7px 10px;
       cursor: pointer;
+      font-size: 1rem;
+      color: var(--text);
+      transition: all 0.2s;
+      margin-left: 8px;
     }
 
-    .navbar img {
-      vertical-align: middle;
-    }
+    .theme-btn:hover { border-color: var(--accent); }
 
-    .navbar a:hover, .navbar button:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
+    /* ─── MAIN WRAPPER ─── */
+    main { position: relative; z-index: 1; }
 
+    /* ─── HERO ─── */
     .hero {
-      padding: 60px 20px;
-      text-align: center;
-      background: linear-gradient(120deg, var(--accent), transparent);
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: calc(var(--nav-h) + 40px) clamp(20px, 5vw, 60px) 80px;
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
-    .hero h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.1s forwards;
     }
 
-    .hero p {
-      font-size: 1.3em;
-      max-width: 800px;
-      margin: auto;
+    .hero-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--heading);
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
     }
 
-    .hero a {
-      margin: 20px 10px 0;
-      display: inline-block;
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent);
     }
 
-    .hero a.resume-btn {
-      margin-top: 30px;
-      background: var(--accent);
-      color: black;
-      padding: 10px 20px;
-      border-radius: 30px;
-      font-weight: bold;
+    .hero-tagline {
+      margin-top: 28px;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--muted);
+      max-width: 520px;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.35s forwards;
+    }
+
+    .hero-tagline strong { color: var(--text); font-weight: 500; }
+
+    .hero-actions {
+      margin-top: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.5s forwards;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 24px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 500;
       text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
     }
 
-    .content {
-      padding: 40px 20px;
-      text-align: center;
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
     }
 
-    .profile-pic {
-      width: 200px;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 4px solid white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-      display: block;
-      margin: 20px auto;
+    .btn-primary:hover {
+      background: color-mix(in srgb, var(--accent) 85%, white);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 35%, transparent);
     }
 
-    .skills-section, .news-section, .projects-section {
-      max-width: 1000px;
-      margin: 60px auto;
-      padding: 0 20px;
-      color: var(--darkblue);
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
     }
 
-    .skills-section h2,
-    .projects-section h2,
-    .news-section h2 {
-      color: var(--darkblue);
-      text-align: center;
-      margin-bottom: 40px;
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
-    .skills-grid, .project-grid {
+    .hero-scroll {
+      margin-top: 80px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.7s forwards;
+    }
+
+    .scroll-line {
+      width: 40px; height: 1px;
+      background: var(--muted);
+    }
+
+    /* ─── SECTION WRAPPER ─── */
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px clamp(20px, 5vw, 60px);
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.02em;
+      color: var(--heading);
+      margin-bottom: 48px;
+      line-height: 1.15;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 60px);
+    }
+    .divider hr {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── ABOUT ─── */
+    .about-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
     }
 
-    .skill-category, .project-card, .news-item {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 16px var(--card-shadow);
-      transition: transform 0.3s ease;
+    .about-text p {
+      font-size: 1.05rem;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .about-right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .profile-frame {
+      width: 100%;
+      aspect-ratio: 1;
+      max-width: 280px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
       position: relative;
+    }
+
+    .profile-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .fact-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+    }
+
+    .fact-icon {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .fact-label { color: var(--muted); font-size: 0.78rem; }
+    .fact-value { color: var(--text); font-weight: 500; font-size: 0.9rem; }
+    .fact-value a { color: var(--accent); text-decoration: none; }
+    .fact-value a:hover { text-decoration: underline; }
+
+    /* ─── NEWS ─── */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
       overflow: hidden;
     }
 
-    .skill-category:hover, .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 30px var(--card-shadow);
+    .news-entry {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 24px;
+      align-items: start;
+      padding: 20px 24px;
+      background: var(--card);
+      transition: background 0.2s;
     }
 
-    .skill-category h3 {
+    .news-entry:not(:last-child) {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .news-entry:hover { background: var(--surface); }
+
+    .news-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      padding-top: 3px;
+    }
+
+    .news-content h4 {
+      font-weight: 600;
+      color: var(--heading);
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .news-content p {
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    .news-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 9px;
+      border-radius: 20px;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
       color: var(--accent);
-      margin-bottom: 20px;
-      font-size: 1.4em;
-      text-shadow: 0 0 2px rgba(0,0,0,0.1); /* subtle shadow */
+      border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+      margin-left: 8px;
+      vertical-align: middle;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
 
-    .skill-tags {
+    /* ─── SKILLS ─── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .skill-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .skill-card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+
+    .skill-card h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--heading);
+      margin-bottom: 16px;
+    }
+
+    .tags {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
     }
 
-    .skill-tag {
-      background: linear-gradient(135deg, var(--accent), rgba(0, 255, 195, 0.7));
-      color: var(--tag-text);
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 0.8em;
-      font-weight: 600;
-      cursor: default;
-      text-shadow: 0 0 1px rgba(0, 0, 0, 0.05);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    .tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      transition: all 0.15s;
     }
 
-    .skill-tag:hover {
-      transform: scale(1.05);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    .tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
-    .project-card img {
+    /* ─── PROJECTS ─── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.3s;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .project-img {
       width: 100%;
-      height: 180px;
+      aspect-ratio: 16/9;
       object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 10px;
+      background: linear-gradient(135deg, var(--surface), var(--card));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .project-img img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+
+    .project-body {
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-category {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
     }
 
     .project-card h3 {
-      color: var(--accent);
-      margin: 0 0 10px 0;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--heading);
+      margin-bottom: 8px;
+      line-height: 1.4;
     }
 
-    .project-card a {
-      color: var(--accent);
-      font-weight: bold;
-      text-decoration: none;
+    .project-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      flex: 1;
+      line-height: 1.6;
     }
 
-    .footer {
-      background-color: var(--nav-bg);
-      color: var(--text-color);
+    .project-arrow {
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .projects-cta {
+      margin-top: 32px;
       text-align: center;
-      padding: 10px;
-      font-size: 12px;
     }
 
-    @keyframes pulse {
-      0% { background-position: 0% 0%; }
-      100% { background-position: 100% 100%; }
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 28px clamp(20px, 5vw, 60px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+      max-width: 100%;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: radial-gradient(circle at center, rgba(0,255,200,0.05) 0%, transparent 70%),
-                  linear-gradient(135deg, rgba(0,255,200,0.03) 25%, transparent 25%) repeat;
-      background-size: 300% 300%;
-      z-index: -1;
-      animation: pulse 15s infinite alternate;
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s var(--transition), transform 0.7s var(--transition);
     }
 
-    @media (max-width: 600px) {
-      .hero h1 {
-        font-size: 2em;
-      }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── KEYFRAMES ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .profile-frame { max-width: 180px; }
+      .news-entry { grid-template-columns: 1fr; gap: 4px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { font-size: 3rem; }
+      .nav-links { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <div class="navbar">
-    <div class="nav-left">
-      <a href="index.html">Home</a>
-      <a href="projects.html">Projects</a>
-      <a href="contact.html">Contact</a>
-      <a href="resume.html">Resume</a>
-    </div>
-    <div class="nav-right">
-      <!-- <a href="https://github.com/yourusername" target="_blank" title="GitHub">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="20">
-      </a>
-      <a href="https://linkedin.com/in/yourname" target="_blank" title="LinkedIn">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="20">
-      </a> -->
-      <button id="themeToggleBtn" onclick="toggleTheme()">🌙</button>
-    </div>
-  </div>
+  <!-- BG EFFECTS -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+  <div class="bg-glow2"></div>
 
-  <!-- Hero -->
-  <section class="hero">
-    <h1>Hi, I'm Helena Sieh 👋</h1>
-    <p>Robotics Engineer @ University of Michigan | Human-Robot Interaction • Autonomous Systems • CV/AI</p>
-  </section>
-
-  <!-- Profile -->
-  <div class="content">
-    <img src="https://i.ibb.co/DDH0qxnd/Screenshot-2025-08-23-at-9-36-58-AM.png" alt="Helena Profile" class="profile-pic">
-    <h2>Things About Me</h2>
-    <ul style="text-align: left; display: inline-block; max-width: 700px;">
-      <li>Interests: Human-Robot Interaction (HRI), autonomous vehicles, machine learning, AI in robotics</li>
-      <li>Student at the <a href="https://robotics.umich.edu/" target="_blank">University of Michigan</a></li>
-      <li>Member of the <a href="https://mavric.si.umich.edu/" target="_blank">MAVRIC Lab</a></li>
-      <li>Spent three amazing years in Barcelona, Spain, playing futsal</li>
+  <!-- NAVBAR -->
+  <nav>
+    <a href="index.html" class="nav-logo">Helena Sieh</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
-  </div>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle theme">☀️</button>
+  </nav>
 
-  <!-- News -->
-  <section class="news-section">
-    <h2>📢 News</h2>
-    <div class="news-item">
-      <p><em>September 30, 2025</em></p>
-      <h3>Paper Submitted to HRI 2025! 🎉</h3>
-      <p>
-        Paper under review at the ACM/IEEE International Conference on Human-Robot Interaction (HRI 2025)
-        <!-- 
-        I’m a <strong>co-author</strong> on a paper recently submitted to the 
-        <a href="https://humanrobotinteraction.org/2026/" target="_blank">ACM/IEEE International Conference on Human-Robot Interaction (HRI 2025)</a>,
-        focusing on human-robot collaboration and social perception. -->
+  <main>
+    <!-- ─── HERO ─── -->
+    <div class="hero">
+      <p class="hero-eyebrow">// Robotics Engineer · Ann Arbor, MI</p>
+      <h1 class="hero-name">Helena<br><em>Sieh.</em></h1>
+      <p class="hero-tagline">
+        Building intelligent systems at the intersection of <strong>human–robot interaction</strong>,
+        autonomous perception, and machine learning.
       </p>
-    </div>
-  </section>
-
-  <!-- Skills -->
-  <section class="skills-section">
-    <h2>Skills & Expertise</h2>
-    <div class="skills-grid">
-      <div class="skill-category">
-        <h3>🤖 Robotics & Systems</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">ROS</span>
-          <span class="skill-tag">ROS2</span>
-          <span class="skill-tag">SLAM</span>
-          <span class="skill-tag">RTAB-Map</span>
-          <span class="skill-tag">Cartographer</span>
-          <span class="skill-tag">Isaac Sim</span>
-          <span class="skill-tag">PID Control</span>
-          <span class="skill-tag">Sensor Fusion</span>
-          <span class="skill-tag">Localization</span>
-          <span class="skill-tag">Mapping</span>
-          <span class="skill-tag">Odometry</span>
-          <span class="skill-tag">GNSS</span>
-          <span class="skill-tag">IMU</span>
-          <span class="skill-tag">Jetson Orin</span>
-          <span class="skill-tag">CUDA</span>
-          <span class="skill-tag">Gazebo</span>
-          <span class="skill-tag">ROS2 Bridge</span>
-          <span class="skill-tag">Actuators</span>
-        </div>
+      <div class="hero-actions">
+        <a href="projects.html" class="btn btn-primary">View Projects →</a>
+        <a href="resume.html" class="btn btn-ghost">Resume</a>
+        <a href="contact.html" class="btn btn-ghost">Get in Touch</a>
       </div>
-
-      <div class="skill-category">
-        <h3>🧠 Computer Vision & AI</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">OpenCV</span>
-          <span class="skill-tag">Open3D</span>
-          <span class="skill-tag">YOLO</span>
-          <span class="skill-tag">PyTorch</span>
-          <span class="skill-tag">TensorFlow</span>
-          <span class="skill-tag">CNNs</span>
-          <span class="skill-tag">MediaPipe</span>
-          <span class="skill-tag">OpenFace</span>
-          <span class="skill-tag">Pose Estimation</span>
-          <span class="skill-tag">Gaze Estimation</span>
-          <span class="skill-tag">RGB-D Processing</span>
-          <span class="skill-tag">ArUco</span>
-          <span class="skill-tag">AprilTags</span>
-          <span class="skill-tag">scikit-learn</span>
-        </div>
-      </div>
-
-      <div class="skill-category">
-        <h3>💻 Programming & Tools</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">C++</span>
-          <span class="skill-tag">Bash</span>
-          <span class="skill-tag">Shell</span>
-          <span class="skill-tag">Git</span>
-          <span class="skill-tag">GitHub</span>
-          <span class="skill-tag">Linux</span>
-          <span class="skill-tag">rosbag</span>
-          <span class="skill-tag">Isaac Sim APIs</span>
-          <span class="skill-tag">NumPy</span>
-        </div>
-      </div>
-
-      <div class="skill-category">
-        <h3>🔧 Hardware & Prototyping</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">SolidWorks</span>
-          <span class="skill-tag">Fusion 360</span>
-          <span class="skill-tag">3D Printing</span>
-          <span class="skill-tag">CNC</span>
-          <span class="skill-tag">Laser Cutting</span>
-          <span class="skill-tag">Arduino</span>
-          <span class="skill-tag">Raspberry Pi</span>
-          <span class="skill-tag">LiDAR</span>
-          <span class="skill-tag">RGB-D Cameras</span>
-          <span class="skill-tag">Thermal Cameras</span>
-          <span class="skill-tag">Toyota HSR</span>
-          <span class="skill-tag">Sensor Integration</span>
-          <span class="skill-tag">GD&T</span>
-          <span class="skill-tag">Meshlab</span>
-        </div>
+      <div class="hero-scroll">
+        <span class="scroll-line"></span>
+        scroll to explore
       </div>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <p>&copy; 2025 Helena Sieh. All rights reserved.</p>
+    <div class="divider"><hr></div>
+
+    <!-- ─── ABOUT ─── -->
+    <section id="about">
+      <p class="section-label reveal">01 — About</p>
+      <h2 class="section-title reveal">A little about me.</h2>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>
+            I'm a robotics engineering student at the <a href="https://robotics.umich.edu/" target="_blank" style="color:var(--accent);text-decoration:none;">University of Michigan</a>, working at the crossroads of human–robot interaction, autonomous systems, and computer vision.
+          </p>
+          <p>
+            At the <a href="https://mavric.si.umich.edu/" target="_blank" style="color:var(--accent);text-decoration:none;">MAVRIC Lab</a>, I focus on social robotics and how machines can better understand and respond to human presence — from gaze and pose estimation to scene-level perception.
+          </p>
+          <p>
+            Outside the lab, I spent three years living in Barcelona playing futsal, which taught me a lot about coordination, quick decision-making, and how much fun robots would have playing sports.
+          </p>
+        </div>
+        <div class="about-right reveal">
+          <div class="profile-frame">
+            <img src="https://i.ibb.co/DDH0qxnd/Screenshot-2025-08-23-at-9-36-58-AM.png" alt="Helena Sieh">
+          </div>
+          <div class="about-facts">
+            <div class="fact-row">
+              <div class="fact-icon">🎓</div>
+              <div>
+                <div class="fact-label">Education</div>
+                <div class="fact-value"><a href="https://robotics.umich.edu/" target="_blank">Univ. of Michigan — Robotics</a></div>
+              </div>
+            </div>
+            <div class="fact-row">
+              <div class="fact-icon">🔬</div>
+              <div>
+                <div class="fact-label">Lab</div>
+                <div class="fact-value"><a href="https://mavric.si.umich.edu/" target="_blank">MAVRIC Lab</a></div>
+              </div>
+            </div>
+            <div class="fact-row">
+              <div class="fact-icon">⚡</div>
+              <div>
+                <div class="fact-label">Research focus</div>
+                <div class="fact-value">HRI · Autonomous Systems · CV/AI</div>
+              </div>
+            </div>
+            <div class="fact-row">
+              <div class="fact-icon">⚽</div>
+              <div>
+                <div class="fact-label">Fun fact</div>
+                <div class="fact-value">3 years playing futsal in Barcelona</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"><hr></div>
+
+    <!-- ─── NEWS ─── -->
+    <section id="news">
+      <p class="section-label reveal">02 — News</p>
+      <h2 class="section-title reveal">What's new.</h2>
+      <div class="news-list reveal">
+        <div class="news-entry">
+          <div class="news-date">Sep 30, 2025</div>
+          <div class="news-content">
+            <h4>Paper submitted to HRI 2026 <span class="news-badge">Under Review</span></h4>
+            <p>Co-authored a paper submitted to the ACM/IEEE International Conference on Human-Robot Interaction, focusing on social perception and human-robot collaboration.</p>
+          </div>
+        </div>
+        <!-- add more entries here as your career progresses -->
+      </div>
+    </section>
+
+    <div class="divider"><hr></div>
+
+    <!-- ─── SKILLS ─── -->
+    <section id="skills">
+      <p class="section-label reveal">03 — Expertise</p>
+      <h2 class="section-title reveal">Skills & tools.</h2>
+      <div class="skills-grid">
+
+        <div class="skill-card reveal">
+          <div class="skill-card-icon">🤖</div>
+          <h3>Robotics & Systems</h3>
+          <div class="tags">
+            <span class="tag">ROS / ROS2</span>
+            <span class="tag">SLAM</span>
+            <span class="tag">RTAB-Map</span>
+            <span class="tag">Cartographer</span>
+            <span class="tag">Isaac Sim</span>
+            <span class="tag">PID Control</span>
+            <span class="tag">Sensor Fusion</span>
+            <span class="tag">Localization</span>
+            <span class="tag">Odometry</span>
+            <span class="tag">GNSS</span>
+            <span class="tag">IMU</span>
+            <span class="tag">Jetson Orin</span>
+            <span class="tag">Gazebo</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-card-icon">🧠</div>
+          <h3>Computer Vision & AI</h3>
+          <div class="tags">
+            <span class="tag">OpenCV</span>
+            <span class="tag">YOLO</span>
+            <span class="tag">PyTorch</span>
+            <span class="tag">TensorFlow</span>
+            <span class="tag">CNNs</span>
+            <span class="tag">MediaPipe</span>
+            <span class="tag">OpenFace</span>
+            <span class="tag">Pose Estimation</span>
+            <span class="tag">Gaze Estimation</span>
+            <span class="tag">RGB-D</span>
+            <span class="tag">ArUco / AprilTags</span>
+            <span class="tag">scikit-learn</span>
+            <span class="tag">Open3D</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-card-icon">💻</div>
+          <h3>Programming & Tools</h3>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">C++</span>
+            <span class="tag">Bash</span>
+            <span class="tag">Git</span>
+            <span class="tag">Linux</span>
+            <span class="tag">rosbag</span>
+            <span class="tag">NumPy</span>
+            <span class="tag">CUDA</span>
+            <span class="tag">Isaac Sim APIs</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-card-icon">🔧</div>
+          <h3>Hardware & Prototyping</h3>
+          <div class="tags">
+            <span class="tag">SolidWorks</span>
+            <span class="tag">Fusion 360</span>
+            <span class="tag">3D Printing</span>
+            <span class="tag">CNC</span>
+            <span class="tag">Laser Cutting</span>
+            <span class="tag">Arduino</span>
+            <span class="tag">Raspberry Pi</span>
+            <span class="tag">LiDAR</span>
+            <span class="tag">RGB-D Cameras</span>
+            <span class="tag">Toyota HSR</span>
+            <span class="tag">GD&amp;T</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="divider"><hr></div>
+
+    <!-- ─── PROJECTS ─── -->
+    <section id="projects">
+      <p class="section-label reveal">04 — Work</p>
+      <h2 class="section-title reveal">Featured projects.</h2>
+      <div class="projects-grid">
+
+        <a href="projects.html" class="project-card reveal">
+          <div class="project-img">🤝</div>
+          <div class="project-body">
+            <p class="project-category">Human-Robot Interaction</p>
+            <h3>Social Perception Research</h3>
+            <p>Developing perception pipelines for the Toyota HSR to understand human pose, gaze, and intent in shared environments.</p>
+            <div class="project-arrow">View project →</div>
+          </div>
+        </a>
+
+        <a href="projects.html" class="project-card reveal">
+          <div class="project-img">🗺️</div>
+          <div class="project-body">
+            <p class="project-category">Autonomous Navigation</p>
+            <h3>SLAM & Mapping Systems</h3>
+            <p>Building and evaluating SLAM pipelines using RTAB-Map, Cartographer, and sensor fusion with LiDAR + RGB-D cameras.</p>
+            <div class="project-arrow">View project →</div>
+          </div>
+        </a>
+
+        <a href="projects.html" class="project-card reveal">
+          <div class="project-img">👁️</div>
+          <div class="project-body">
+            <p class="project-category">Computer Vision</p>
+            <h3>Gaze & Pose Estimation</h3>
+            <p>Using OpenFace, MediaPipe, and custom CNN models to extract meaningful behavioral signals for robot decision-making.</p>
+            <div class="project-arrow">View project →</div>
+          </div>
+        </a>
+
+      </div>
+      <div class="projects-cta reveal">
+        <a href="projects.html" class="btn btn-ghost">See all projects →</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <span>© 2025 Helena Sieh</span>
+    <div class="footer-links">
+      <a href="projects.html">Projects</a>
+      <a href="resume.html">Resume</a>
+      <a href="contact.html">Contact</a>
+    </div>
   </footer>
 
-  <!-- Theme Script -->
+  <!-- ─── SCRIPTS ─── -->
   <script>
-    function setTheme(isDark) {
-      document.body.classList.toggle('dark-mode', isDark);
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      document.getElementById('themeToggleBtn').textContent = isDark ? '☀️' : '🌙';
+    // Theme
+    function applyTheme(dark) {
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      document.getElementById('themeBtn').textContent = dark ? '☀️' : '🌙';
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
     }
 
     function toggleTheme() {
-      setTheme(!document.body.classList.contains('dark-mode'));
+      applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
     }
 
-    window.onload = () => {
-      setTheme(localStorage.getItem('theme') === 'dark');
-    };
-  </script>
+    // Init theme
+    const saved = localStorage.getItem('theme');
+    applyTheme(saved ? saved === 'dark' : true);
 
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          // stagger siblings in same parent
+          const siblings = [...e.target.parentElement.querySelectorAll('.reveal:not(.visible)')];
+          const idx = siblings.indexOf(e.target);
+          setTimeout(() => {
+            e.target.classList.add('visible');
+          }, idx * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>

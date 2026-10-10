@@ -575,6 +575,41 @@
       </div>
     </div>
 
+    <!-- ── Project : ROB 320 (Robot Operating Systems) ── -->
+    <div class="project-card" data-index="2">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div>
+          <p class="card-meta">Robot Middleware · Networking · Kinematics</p>
+          <h2 class="card-title">Robot Operating Systems in C++</h2>
+          <p class="card-date">Winter 2026</p>
+        </div>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="card-body-content">
+            <p> 
+              Five projects from Robot Operating Systems (ROB 320) at Michigan, building the software layers of a robot from scratch in C++: from keyboard teleoperation and TCP sensor streaming on a physical MBot to a ROS-style publish/subscribe middleware and kinematics solvers for a robot arm.
+            </p>
+            <ul>
+              <li>Teleop Keyboard: built a command-line keyboard teleoperation interface for the MBot Omni, using named pipes (FIFOs) to parse key input and a driver program to forward drive commands to the control board over USB.</li>
+              <li>Click to Drive: wrote MBot and LiDAR driver programs that host TCP socket servers, streaming live laser range (RPLIDAR A1) and odometry data to a remote GUI over Wi-Fi and receiving position commands back.</li>
+              <li>Robot Interprocess eXchange (RIX): implemented a full publish/subscribe system (Node, Publisher, Subscriber, and Mediator classes) for asynchronous message streaming between nodes via topics.</li>
+              <li>Forward Kinematics: developed a coordinate-frame transformation library that parses a JSON robot description (JRDF, equivalent to URDF) and represents link and joint relationships as 3D homogeneous transforms using Eigen.</li>
+              <li>Inverse Kinematics: implemented a Gauss-Newton inverse kinematics solver for a serial-chain robot, computing the geometric Jacobian and iterating with its Moore-Penrose pseudoinverse.</li>
+            </ul>
+
+            <p class="body-section-label">Click to Drive Demo</p>
+            <div class="embed-wrap">
+              <div class="embed-label">▶ Click to Drive Demo</div> 
+              <iframe src="https://drive.google.com/file/d/1oqbRiV8SvDKO9LbilTiHVXMh3R_q4KB3/view" height="400" allow="autoplay"></iframe>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ── Project 4: J&J Internship ── -->
     <div class="project-card" data-index="3">
       <div class="card-header" onclick="toggleCard(this)">
